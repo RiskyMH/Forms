@@ -131,11 +131,12 @@ export default async function FormPage({ params, noEdit = false }: { params: { i
                     <Link href="#" className="underline hover:font-bold">Privacy Policy</Link>
                 </p>
             </div>
-            {!noEdit && (
+            {/* // TODO: when ppr works again, have edit button! */}
+            {/* {!noEdit && (
                 <Suspense fallback={<></>}>
                     <EditButton formId={form.id} ownerId={form.user.id} />
                 </Suspense>
-            )}
+            )} */}
         </TheForm>
     )
 }
