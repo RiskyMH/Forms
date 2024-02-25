@@ -2,7 +2,7 @@
 const nextConfig = {
     experimental: {
         useLightningcss: true,
-        ppr: true,
+        // ppr: true,
     },
     logging: {
         fetches: {
