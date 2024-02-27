@@ -52,6 +52,16 @@ const nextConfig = {
                     { type: 'cookie', key: 'token' }
                 ]
             },
+            {
+                source: '/index',
+                destination: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                permanent: false,
+            },
+            {
+                source: '/index.html',
+                destination: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                permanent: false,
+            },
 
         ];
     }
