@@ -98,7 +98,6 @@ export function ChoiceFieldRadio({ field }: FieldProps) {
         form?.addEventListener("reset", () => setValue(null))
         return () => form?.removeEventListener("reset", () => setValue(null))
     }, [])
-    console.log(value)
 
     return (
         <RadioGroup
@@ -233,13 +232,15 @@ export function ChoiceFieldDropdown({ field }: FieldProps) {
             onValueChange={setValue}
         >
             <SelectTrigger className="w-full sm:w-[280px] [&[data-placeholder='']]:text-muted-foreground">
-                <SelectValue>
-                    {!value ? <span className="text-muted-foreground">Choose</span> : value}
-                </SelectValue>
+                {!value ? (
+                    <span className="text-muted-foreground pointer-events-none">Choose</span>
+                ) : (
+                    <SelectValue />
+                )}
             </SelectTrigger>
             <SelectContent>
                 {/* @ts-expect-error - reset option */}
-                <SelectItem className="text-muted-foreground" defaultChecked>Choose</SelectItem>
+                <SelectItem className="text-muted-foreground">Choose</SelectItem>
                 <SelectSeparator />
                 {field.options?.map((option, i) => (
                     <SelectItem key={i} value={option || " "}>{option}</SelectItem>
@@ -284,7 +285,7 @@ export function DateField({ field }: FieldProps) {
                 >
                     <CalendarIcon className="mr-2 h-4 w-4" />
                     {date ? format(date, "PPP") : <span>Pick a date</span>}
-                    <input type="hidden" name={field.id} value={date?.toISOString()} />
+                    <input type="hidden" name={field.id} value={date?.toISOString()} required={!!field.required} />
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0">
