@@ -73,7 +73,7 @@ export function TextField({ field }: FieldProps) {
                 name={field.id}
                 type="text"
                 placeholder="Your answer"
-                className="w-[280px]"
+                className="w-full sm:w-[280px]"
                 required={!!field.required}
                 disabled={formStatus.pending}
             />
@@ -91,6 +91,14 @@ export function TextField({ field }: FieldProps) {
 
 export function ChoiceFieldRadio({ field }: FieldProps) {
     const formStatus = useFormStatus();
+    const [value, setValue] = useState<null | string>(null)
+
+    useEffect(() => {
+        const form = document.querySelector("form")
+        form?.addEventListener("reset", () => setValue(null))
+        return () => form?.removeEventListener("reset", () => setValue(null))
+    }, [])
+    console.log(value)
 
     return (
         <RadioGroup
@@ -98,7 +106,10 @@ export function ChoiceFieldRadio({ field }: FieldProps) {
             required={!!field.required}
             disabled={formStatus.pending}
             name={field.id}
+            // @ts-expect-error this is valid...
+            value={value}
             onValueChange={(e) => {
+                setValue(e)
                 if (field.otherOption) {
                     const elem = document.getElementById(`${field.id}:other-input`)
                     if (document.getElementById(`${field.id}:other`)?.ariaChecked === "true") {
@@ -134,7 +145,7 @@ export function ChoiceFieldRadio({ field }: FieldProps) {
                         type="text"
                         id={`${field.id}:other-input`}
                         placeholder="Your answer"
-                        className="w-[280px]"
+                        className="w-full sm:w-[280px]"
                         disabled={formStatus.pending}
                         name={field.id}
                         onFocus={(e) => {
@@ -187,7 +198,7 @@ export function ChoiceFieldCheckbox({ field }: FieldProps) {
                         id={`${field.id}:other-input`}
                         type="text"
                         placeholder="Your answer"
-                        className="w-[280px]"
+                        className="w-full sm:w-[280px]"
                         name={field.id}
                         disabled={formStatus.pending}
                         onFocus={(e) => {
@@ -204,15 +215,31 @@ export function ChoiceFieldCheckbox({ field }: FieldProps) {
 
 export function ChoiceFieldDropdown({ field }: FieldProps) {
     const formStatus = useFormStatus();
+    const [value, setValue] = useState<null | string>(null);
+
+    useEffect(() => {
+        const form = document.querySelector("form")
+        form?.addEventListener("reset", () => setValue(null))
+        return () => form?.removeEventListener("reset", () => setValue(null))
+    }, [])
 
     return (
-        <Select required={!!field.required} disabled={formStatus.pending} name={field.id}>
-            <SelectTrigger className="w-[180px] [&[data-placeholder='']]:text-muted-foreground">
-                <SelectValue />
+        <Select
+            required={!!field.required}
+            disabled={formStatus.pending}
+            name={field.id}
+            // @ts-expect-error this is valid...
+            value={value}
+            onValueChange={setValue}
+        >
+            <SelectTrigger className="w-full sm:w-[280px] [&[data-placeholder='']]:text-muted-foreground">
+                <SelectValue>
+                    {!value ? <span className="text-muted-foreground">Choose</span> : value}
+                </SelectValue>
             </SelectTrigger>
             <SelectContent>
                 {/* @ts-expect-error - reset option */}
-                <SelectItem className="text-muted-foreground">Choose</SelectItem>
+                <SelectItem className="text-muted-foreground" defaultChecked>Choose</SelectItem>
                 <SelectSeparator />
                 {field.options?.map((option, i) => (
                     <SelectItem key={i} value={option || " "}>{option}</SelectItem>
@@ -250,7 +277,7 @@ export function DateField({ field }: FieldProps) {
                 <Button
                     variant="outline"
                     className={cn(
-                        "w-[280px] justify-start text-left font-normal",
+                        "w-full sm:w-[280px] justify-start text-left font-normal",
                         "text-muted-foreground"
                     )}
                     disabled={formStatus.pending}
