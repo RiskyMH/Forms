@@ -214,7 +214,7 @@ export function ChoiceFieldCheckbox({ field }: FieldProps) {
 
 export function ChoiceFieldDropdown({ field }: FieldProps) {
     const formStatus = useFormStatus();
-    const [value, setValue] = useState<null | string>(null);
+    const [value, setValue] = useState<null | string | undefined>(undefined);
 
     useEffect(() => {
         const form = document.querySelector("form")
@@ -264,39 +264,15 @@ export function ChoiceField({ field }: FieldProps) {
 
 export function DateField({ field }: FieldProps) {
     const formStatus = useFormStatus();
-    const [date, setDate] = useState<Date>()
-
-    useEffect(() => {
-        const form = document.querySelector("form")
-        form?.addEventListener("reset", () => setDate(undefined))
-        return () => form?.removeEventListener("reset", () => setDate(undefined))
-    }, [])
 
     return (
-        <Popover>
-            <PopoverTrigger asChild>
-                <Button
-                    variant="outline"
-                    className={cn(
-                        "w-full sm:w-[280px] justify-start text-left font-normal",
-                        "text-muted-foreground"
-                    )}
-                    disabled={formStatus.pending}
-                >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {date ? format(date, "PPP") : <span>Pick a date</span>}
-                    <input type="hidden" name={field.id} value={date?.toISOString()} required={!!field.required} />
-                </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0">
-                <Calendar
-                    mode="single"
-                    selected={date}
-                    onSelect={setDate}
-                    initialFocus
-                />
-            </PopoverContent>
-        </Popover>
+        <Input
+            name={field.id}
+            type="date"
+            className="w-full sm:w-[280px]"
+            required={!!field.required}
+            disabled={formStatus.pending}
+        />
     )
 }
 
