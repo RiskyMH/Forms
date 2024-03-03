@@ -214,20 +214,25 @@ export function ChoiceFieldCheckbox({ field }: FieldProps) {
 
 export function ChoiceFieldDropdown({ field }: FieldProps) {
     const formStatus = useFormStatus();
-    const [value, setValue] = useState<null | string | undefined>(undefined);
+    const [value, setValue] = useState<string | undefined>(undefined);
 
     useEffect(() => {
         const form = document.querySelector("form")
-        form?.addEventListener("reset", () => setValue(null))
-        return () => form?.removeEventListener("reset", () => setValue(null))
+        const fn = () => setValue(undefined)
+        form?.addEventListener("reset", fn)
+        return () => form?.removeEventListener("reset", fn)
     }, [])
+
+    useEffect(() => {
+        // @ts-expect-error hmmm
+        if (!value) document.getElementsByName(field.id)[0].value = ""
+    }, [value])
 
     return (
         <Select
             required={!!field.required}
             disabled={formStatus.pending}
             name={field.id}
-            // @ts-expect-error this is valid...
             value={value}
             onValueChange={setValue}
         >
