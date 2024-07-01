@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     experimental: {
-        useLightningcss: true,
+        useLightningcss: process.env.TURBOPACK === "1",
         // ppr: true,
     },
     logging: {
@@ -67,4 +67,4 @@ const nextConfig = {
     }
 };
 
-export default nextConfig;
+module.exports = nextConfig;
