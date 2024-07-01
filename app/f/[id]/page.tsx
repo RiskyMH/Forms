@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { db, schema } from "@/utils/db"
 import { asc, eq } from "drizzle-orm"
 import { notFound } from "next/navigation";
-import { ChoiceField, DateField, SubmitFormButton, TextField, TheForm } from "./components.client";
+import { ChoiceField, DateField, PrivacyLink, SubmitFormButton, TermsLink, TextField, TheForm } from "./components.client";
 import TooltipText from "@/components/tooltip-text";
 import type { Metadata } from "next";
 import { siteName } from "@/utils/const";
@@ -126,9 +126,11 @@ export default async function FormPage({ params, noEdit = false }: { params: { i
             <div className="w-full flex pb-3">
                 <p className="flex gap-2 text-muted-foreground text-xs mx-auto">
                     {form.user.role === "admin" ? "This form was made by RiskyMH." : "This content is neither created nor endorsed by RiskyMH."}
-                    <Link href={`#report?form=${form.id}`} className="underline hover:font-bold">Report Abuse</Link>-
-                    <Link href="#" className="underline hover:font-bold">Terms of Service</Link>-
-                    <Link href="#" className="underline hover:font-bold">Privacy Policy</Link>
+                    {/* <Link href={`#report?form=${form.id}`} className="underline hover:font-bold">Report Abuse</Link>- */}
+                    <Link href={`mailto:forms@riskymh.dev?subject=Reporting form for abuse&body=https://forms.riskymh.dev/f/${form.id}`} className="underline hover:font-bold">Report Abuse</Link>-
+                    {/* <Link href="#" className="underline hover:font-bold">Terms of Service</Link>- */}
+                    {/* <Link href="#" className="underline hover:font-bold">Privacy Policy</Link> */}
+                    <TermsLink />-<PrivacyLink />
                 </p>
             </div>
             {/* // TODO: when ppr works again, have edit button! */}

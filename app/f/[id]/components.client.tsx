@@ -16,6 +16,7 @@ import { useEffect, useState, type PropsWithChildren } from "react";
 import { submitForm } from "@/actions/submit-form";
 import { toast } from "sonner";
 import { format } from "date-fns";
+import Link from "next/link";
 
 
 export function TheForm({ children }: PropsWithChildren) {
@@ -281,3 +282,10 @@ export function DateField({ field }: FieldProps) {
     )
 }
 
+export function PrivacyLink() {
+    return <Link href="#" className="underline hover:font-bold" onClick={() => toast.message("What is privacy?")}>Privacy Policy</Link>
+}
+
+export function TermsLink() {
+    return <Link href="#" className="underline hover:font-bold" onClick={() => toast.message("What are terms? Just be good!")}>Terms of Service</Link>
+}
