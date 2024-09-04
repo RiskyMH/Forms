@@ -2,7 +2,8 @@
 const nextConfig = {
     experimental: {
         useLightningcss: process.env.TURBOPACK === "1",
-        // ppr: true,
+        ppr: true,
+        pprFallbacks: true,
     },
     logging: {
         fetches: {
