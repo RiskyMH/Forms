@@ -34,7 +34,7 @@
     "next-themes": "^0.3.0",
     "pg": "^8.12.0",
     "react": "^19.0.0-rc-4f604941-20240830",
-    "react-day-picker": "^9.0.8",
+    "react-day-picker": "^8.10.1",
     "react-dom": "^19.0.0-rc-4f604941-20240830",
     "sonner": "^1.5.0",
     "tailwind-merge": "^2.5.2",
